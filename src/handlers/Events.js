@@ -57,7 +57,11 @@ class EventHandler extends Collection {
 
       return event;
     } catch (err) {
-      this.client.logger.error(err);
+      if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'development') {
+        console.log(err)
+      } else {
+        this.client.logger.error(err);
+      }
     }
   }
 

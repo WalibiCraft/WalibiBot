@@ -39,14 +39,12 @@ class Message extends Event {
 
     if (cmd._cooldown.has(message.author.id)) {
       return message.delete()
-          && message.reply(`Please wait ${((cmd._cooldown.get(message.author.id) - Date.now()) / 1000).toFixed(1)} second(s) to reuse the ${cmd.name} command.`);
+        && message.reply(`Please wait ${((cmd._cooldown.get(message.author.id) - Date.now()) / 1000).toFixed(1)} second(s) to reuse the ${cmd.name} command.`);
     }
 
     if (cmd.cooldown) {
       cmd._cooldown.set(message.author.id, Date.now() + cmd.cooldown);
-      this.client.setTimeout(() => {
-        cmd._cooldown.delete(message.author.id);
-      }, cmd.cooldown);
+      cmd._cooldown.delete(message.author.id);
     }
 
     const options = {};
@@ -81,7 +79,11 @@ class Message extends Event {
               return message.channel.send(`You didn't provide correct arguments, for more information use the following command: \`/help ${cmd.name}\``);
             }
           } catch (err) {
-            client.logger.error(err);
+            if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'development') {
+              console.log(err)
+            } else {
+              this.client.logger.error(err);
+            }
           }
         }
 
@@ -92,7 +94,11 @@ class Message extends Event {
     try {
       cmd.execute(message, options);
     } catch (err) {
-      this.client.logger.error(err);
+      if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'development') {
+        console.log(err)
+      } else {
+        this.client.logger.error(err);
+      }
     }
   }
 }
