@@ -13,27 +13,27 @@ module.exports = {
       .setDescription(
         "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     const SayEmbed = new Discord.RichEmbed()
       .setColor("RED")
       .setDescription(
         "Vous devez indiquer un message à répéter ❌\nPlus d'informations avec la commande `w/info <Commande>` 💡"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     const ChannelEmbed = new Discord.RichEmbed()
       .setColor("RED")
       .setDescription(
         "Le channel que vous avez indiqué n'est pas valide ❌\nPlus d'informations avec la commande `w/info <Commande>` 💡"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     if (!message.member.hasPermission("ADMINISTRATOR"))
       return message.channel.send(PermEmbed);

@@ -1,17 +1,19 @@
+const Discord = require('discord.js')
 const Command = require('../../structures/Command');
+
 class Suggestion extends Command {
   constructor(...args) {
     super({
-      description: "Poste votre idée mise en forme dans le channel, <#606836989458776074> afin que votre propositions soit examinée par tout le serveur",
-      usage: "e/suggest <proposition>",
-      examples: ["e/suggest Mettre en place un nouveau grade", "e/suggest Améliorer l'attraction n°1"],
+      description: "Poste votre idée mise en forme dans le channel「🔥」suggestions afin que votre propositions soit examinée par tout le serveur",
+      usage: "w/suggest <proposition>",
+      examples: ["w/suggest Mettre en place un nouveau grade", "w/suggest Améliorer l'attraction n°1"],
       cooldown: 1000,
       aliases: ["suggest","idea"],
       guildOnly: true,
     }, ...args);
   }
 
-  async execute(message, args) {
+  async execute(message, client) {
     const things = message.content.trim().split(/ +/g);
     const suggest = things.slice(1).join(" ")
 
@@ -23,27 +25,26 @@ class Suggestion extends Command {
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
       .setFooter("WalibiBot", message.guild.iconURL());
-    if (!suggest) return message.channel.send(SayEmbed)
+    if (!suggest) return message.reply({ embeds: [SayEmbed]})
 
-    const suggestionembedchat = new Discord.MessageEmbed()
+    const SuggestionEmbed = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setColor("17ace8")
       .setTitle(":heart: SUGGESTION")
       .setDescription(
-        `${suggest}\n\n*Idée proposée par ${message.author
-        }, merci a lui !*`
+        `${suggest}\n\n**Idée proposée par ${message.author}, merci à lui !**\n Les discussions sont désactivées dans ce channel, \nUtilisez \`「🤖」commandes\` pour proposer votre suggestion avec \`w/suggestion\`\n Ou débattez de cette proposition dans \`「🌐」général\`.`
       )
       .setTimestamp()
       .setFooter("WalibiBot", message.guild.iconURL());
-    message.delete();
 
-    client.channels.cache
-      .get("751501134623014993")
-      .send(suggestionembedchat)
-      .then(function (message) {
-        message.react("❌");
-        message.react("✅");
+    message.guild.channels.cache
+      .get("722841863429816481")
+      .send({embeds: [SuggestionEmbed]})
+      .then(function (msg) {
+        msg.react("❌");
+        msg.react("✅");
       });
+    message.delete();
   }
 };
 module.exports = Suggestion;

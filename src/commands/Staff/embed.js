@@ -13,18 +13,18 @@ module.exports = {
       .setDescription(
         "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     const MessageEmbed = new Discord.RichEmbed()
       .setColor("RED")
       .setDescription(
         "Vous devez entre un message a transformer en embed ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     if (!message.member.hasPermission("ADMINISTRATOR"))
       return message.channel.send(PermEmbed);
@@ -35,12 +35,12 @@ module.exports = {
       return message.channel.send(PermEmbed);
     if (!args[0]) return message.channel.send(MessageEmbed);
     let embedchat = new Discord.RichEmbed()
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setColor(args[0])
       .setTitle(args[1])
       .setDescription(`${things.slice(3).join(" ")}`)
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
     message.delete();
 
     message.channel.send(embedchat);

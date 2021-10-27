@@ -14,9 +14,9 @@ module.exports = {
                 .setDescription(
                     "Ses arguments sont manquants :x:\nPlus d'informations avec la commande `e/info <Commande>` :bulb:"
                 )
-                .setAuthor(message.author.tag, message.author.displayAvatarURL)
+                .setAuthor(message.author.tag, message.author.displayAvatarURL())
                 .setTimestamp()
-                .setFooter("WalibiBot", message.guild.iconURL);
+                .setFooter("WalibiBot", message.guild.iconURL());
             return message.channel.send(ErrorEmbed)
         }
         let things = message.content.trim().split(/ +/g);
@@ -26,12 +26,12 @@ module.exports = {
         const Image = args[2]
 
         const AboutEmbed = new Discord.RichEmbed()
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
             .setColor("NAVY")
             .setImage(Image)
             .setTitle(":handshake: NOUVEAU PARTENAIRE")
-            .setFooter("WalibiBot", message.guild.iconURL)
+            .setFooter("WalibiBot", message.guild.iconURL())
             .setDescription("**Un nouveau serveur viens de rejoindre nos partenaires !** <a:blob_party:771027997075308565> \nNous sommes heureux d'annoncer notre collaboration avec le serveur **" + Name + "**, administré par **" + Owner + "**.\nEn espérant que cet échange soit bénéfique pour nos 2 projets ! \n**Lien vers leur discord :** " + Invite)
         client.channels.get(`770323720555462697`).send(AboutEmbed);
         message.delete()

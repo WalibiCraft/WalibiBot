@@ -60,9 +60,9 @@ class Ticket extends Command {
                 GoodChannel +
                 " :white_check_mark:\nPlus d'informations avec la commande `w/info <Commande>` :bulb:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const ErrorCloseEmbed = new Discord.RichEmbed()
             .setColor("RED")
@@ -71,63 +71,63 @@ class Ticket extends Command {
                 GoodChannel +
                 " :white_check_mark: \nPlus d'informations avec la commande `w/info <Commande>` :bulb:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const BadChannelEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous faites cette commande de le mauvais channel :x:\nIl faut vous rendre dans le channel <#616994843603763213> pour exécuter celle-ci :white_check_mark:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const ReasonEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous devez préciser une raison d'ouverture de ticket :x:\nPlus d'informations avec la commande `w/info <Commande>` :bulb:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const PermEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous n'avez pas l'autorisation de faire ça, bien tenté ! :x:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const StopEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "La fermeture du ticket à bien été annulée :x:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const ArgEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous devez préciser un argument, essayez par exemple `w/ticket new <raison>` :x:\nPlus d'informations avec la commande `w/info <Commande>` :bulb:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const NoArgEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Cet argument n'est pas reconnu, essayez plutôt `w/ticket new <raison>` :x:\nPlus d'informations avec la commande `w/info <Commande>` :bulb:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         //Déclaration des premiers Embed (Avec des const fixes)
         const ConfirmEmbed = new Discord.RichEmbed()
@@ -136,9 +136,9 @@ class Ticket extends Command {
             .setDescription(
                 "Êtes vous sûr de vouloir fermer ce ticket ? Cette action est irréversible ! :warning:\nTapez `w/yes` ou `w/no` dans les 10 prochaines secondes pour continuer :timer:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const CloseEmbed = new Discord.RichEmbed()
             .setColor("17ace8")
@@ -148,9 +148,9 @@ class Ticket extends Command {
             )
             .addField(":dividers: Utilisez `w/ticket register`", "Pour archiver la conversation\n*:warning: Enregistre uniquement les 100 derniers messages*")
             .addField(":wastebasket: Utilisez `w/ticket delete`", "Pour supprimer le ticket\n*:warning: Obligatoire sinon la personne ne peut plus réouvrir de ticket*")
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         //Vérification des arguments
         if (!args[0]) {
@@ -232,9 +232,9 @@ class Ticket extends Command {
                                 ":clock1: Date de l'action :",
                                 date.format("LLLL")
                             )
-                            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL())
                             .setTimestamp()
-                            .setFooter("WalibiBot", message.guild.iconURL);
+                            .setFooter("WalibiBot", message.guild.iconURL());
                         client.channels.get("616991454824235048").send(OpenLogEmbed);
 
                         //Messages de réponse à l'utilisateur pour le guider
@@ -248,9 +248,9 @@ class Ticket extends Command {
                                 '\"** :white_check_mark: \nRendez vous dans ce channel : ' +
                                 GoodChannel + " :envelope_with_arrow: "
                             )
-                            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL())
                             .setTimestamp()
-                            .setFooter("WalibiBot", message.guild.iconURL);
+                            .setFooter("WalibiBot", message.guild.iconURL());
 
                         message.delete();
                         message.channel.send(OpenEmbed).then(msg => {
@@ -273,7 +273,7 @@ class Ticket extends Command {
                                 ":clock1: Date de l'ouverture du ticket :", date.format("LLLL")
                             )
                             .setTimestamp()
-                            .setFooter("WalibiBot", message.guild.iconURL);
+                            .setFooter("WalibiBot", message.guild.iconURL());
                         c.send(`<@&583766594027651082>, ${message.author} viens d'ouvrir un ticket !`)
                         c.send(TicketEmbed);
                     });
@@ -297,10 +297,10 @@ class Ticket extends Command {
                     )
                     .setAuthor(
                         message.author.tag,
-                        message.author.displayAvatarURL
+                        message.author.displayAvatarURL()
                     )
                     .setTimestamp()
-                    .setFooter("WalibiBot", message.guild.iconURL);
+                    .setFooter("WalibiBot", message.guild.iconURL());
 
                 client.channels
                     .get("616991454824235048")
@@ -338,9 +338,9 @@ class Ticket extends Command {
                             .setTitle(":envelope_with_arrow: TICKET")
                             .setDescription("La conversation à été archivée avec succès :white_check_mark:")
                             .addField(":dividers: Lien vers l'archive de la conversation :", "https://discord.com/channels/" + client.channels.get("616991454824235048").guild.id + "/" + client.channels.get("616991454824235048").id)
-                            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL())
                             .setTimestamp()
-                            .setFooter("WalibiBot", message.guild.iconURL);
+                            .setFooter("WalibiBot", message.guild.iconURL());
 
                         moment.locale("fr");
                         const RegisterLogEmbed = new Discord.RichEmbed()
@@ -348,9 +348,9 @@ class Ticket extends Command {
                             .setTitle(":envelope_with_arrow: TICKET LOGS")
                             .setDescription(`Le ticket au nom \`${message.channel.name}\` a été archivé par ${message.author}.`)
                             .addField(":clock1: Date de l'action :", date.format("LLLL"))
-                            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+                            .setAuthor(message.author.tag, message.author.displayAvatarURL())
                             .setTimestamp()
-                            .setFooter("WalibiBot", message.guild.iconURL);
+                            .setFooter("WalibiBot", message.guild.iconURL());
 
                         msg.edit(RegisterEmbed);
                         client.channels.get("616991454824235048").send(RegisterLogEmbed);
@@ -380,10 +380,10 @@ class Ticket extends Command {
                                         )
                                         .setAuthor(
                                             message.author.tag,
-                                            message.author.displayAvatarURL
+                                            message.author.displayAvatarURL()
                                         )
                                         .setTimestamp()
-                                        .setFooter("WalibiBot", message.guild.iconURL);
+                                        .setFooter("WalibiBot", message.guild.iconURL());
 
                                     client.channels
                                         .get("616991454824235048")
@@ -402,9 +402,9 @@ class Ticket extends Command {
                                     .setDescription(
                                         "Vous avez mis trop de temps a confirmer la fermeture, l'action est donc annulée :x:"
                                     )
-                                    .setAuthor(author.tag, author.displayAvatarURL)
+                                    .setAuthor(author.tag, author.displayAvatarURL())
                                     .setTimestamp()
-                                    .setFooter("WalibiBot", guild.iconURL);
+                                    .setFooter("WalibiBot", guild.iconURL());
                                 msg.edit(TimeEmbed)
                             }
                         });

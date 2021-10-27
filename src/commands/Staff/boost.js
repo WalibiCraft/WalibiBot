@@ -13,18 +13,18 @@ module.exports = {
             .setDescription(
                 "Vous n'avez pas l'autorisation de faire ça, bien tenté ! :x:"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         const MentionEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous devez mentionner un utilisateur ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         //Vérifications classiques
         if (!message.member.hasPermission("ADMINISTRATOR")) {
@@ -51,7 +51,7 @@ module.exports = {
                 " viens de booster le serveur ! Merci à lui <a:Pepe_NitroBoost:635137208474664961>"
             )
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL)
+            .setFooter("WalibiBot", message.guild.iconURL())
             .setImage(
                 "https://support.discordapp.com/hc/article_attachments/360013500032/nitro_gif.gif"
             );

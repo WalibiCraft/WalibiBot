@@ -2,11 +2,12 @@ const Command = require('../../structures/Command');
 class Test extends Command {
     constructor(...args) {
         super({
-            description: "Poste votre idée mise en forme dans le channel, <#606836989458776074> afin que votre propositions soit examinée par tout le serveur",
-            usage: "e/suggest <proposition>",
-            examples: ["e/suggest Mettre en place un nouveau grade", "e/suggest Améliorer l'attraction n°1"],
+            description: "Commande de test",
+            usage: "",
+            examples: [""],
             cooldown: 1000,
             guildOnly: true,
+            enabled: false,
         }, ...args);
     }
 

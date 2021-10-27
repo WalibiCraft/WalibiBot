@@ -4,11 +4,12 @@ class Name extends Command {
   constructor(...args) {
     super({
       description: "",
-      usage: "",
+      usage: [""],
       examples: [""],
       cooldown: 1000,
       aliases: [""],
       guildOnly: true,
+      enabled: true,
       args: [
         {
         }
@@ -17,6 +18,6 @@ class Name extends Command {
   }
 
   async execute(message, args) {
-};
-//module.exports = Name
+  };
 }
+//module.exports = Name

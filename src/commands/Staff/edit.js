@@ -14,9 +14,9 @@ module.exports = {
             .setDescription(
                 "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
         if (!message.member.hasPermission("ADMINISTRATOR"))
             return message.channel.send(PermEmbed);
 
@@ -25,9 +25,9 @@ module.exports = {
             .setDescription(
                 "Vous devez entrer l'id du message que vous voulez éditer ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
         if (!message.member.hasPermission("ADMINISTRATOR"))
             return message.channel.send(PermEmbed);
 
@@ -36,9 +36,9 @@ module.exports = {
             .setDescription(
                 "Vous devez entrer le nouveau contenu du message que vous voulez éditer ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
 
         if (!message.member.hasPermission("ADMINISTRATOR"))
             return message.channel.send(PermEmbed);
@@ -50,12 +50,12 @@ module.exports = {
         let msgId = args[0];
 
         let embedchat = new Discord.RichEmbed()
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setColor(args[1])
             .setTitle(args[2])
             .setDescription(`${things.slice(4).join(" ")}`)
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL);
+            .setFooter("WalibiBot", message.guild.iconURL());
         //message.delete();
 
 

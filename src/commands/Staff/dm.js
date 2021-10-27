@@ -14,27 +14,27 @@ module.exports = {
       .setDescription(
         "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     const SayEmbed = new Discord.RichEmbed()
       .setColor("RED")
       .setDescription(
         "Vous devez indiquer un message à envoyer ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     const MentionEmbed = new Discord.RichEmbed()
       .setColor("RED")
       .setDescription(
         "Vous devez mentionner un utilisateur ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
       )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL);
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     if (!message.member.hasPermission("ADMINISTRATOR"))
       return message.channel.send(PermEmbed);
@@ -56,8 +56,8 @@ module.exports = {
           '**" en mp'
       )
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL);
+      .setFooter("WalibiBot", message.guild.iconURL())
+      .setAuthor(message.author.tag, message.author.displayAvatarURL());
     message.channel.send(mpembed);
   }
 };

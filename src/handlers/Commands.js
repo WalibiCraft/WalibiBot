@@ -25,6 +25,7 @@ class CommandHandler extends Collection {
           const command = this.register(file);
 
           if (command) {
+            if(command.enabled == false) return;
             this.set(file.name, command);
           }
         })

@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const Discord = require('discord.js')
 const Command = require('../../structures/Command');
 
 const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
@@ -20,18 +21,20 @@ const components = [
 class Ping extends Command {
   constructor(...args) {
     super({
-      description: 'Send test packets to the bot, and measures the response time, also, display information from the statuspage api about server & service states.',
+      description: 'Affiche des informations sur le statut du bot Discord ainsi que de l\'API Discord',
       usage: 'ping',
       cooldown: 5000,
-      aliases: ['🏓', 'pong']
+      aliases: ['pong', 'status']
     }, ...args);
   }
 
   async execute(message) {
-    const embed = {
-      title: 'P O N G !',
-      color: 0x7354f6,
-      fields: [{
+
+    const embed = new Discord.MessageEmbed()
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
+      .setTitle(":ping_pong: PONG")
+      .setColor("17ace8")
+      .setFields({
         name: '— Client',
         value: [
           '```',
@@ -39,8 +42,9 @@ class Ping extends Command {
           ` Websocket │ ${this.client.ws.ping}ms`,
           '```'
         ].join('\n')
-      }]
-    };
+      })
+      .setTimestamp()
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     try {
       const data = await (await fetch(url)).json();
@@ -62,7 +66,7 @@ class Ping extends Command {
           '```'
         ].join('\n')
       }, {
-        name: '— Servers Status',
+        name: '— Statuts des serveurs',
         value: [
           '```',
           `   EU West │ ${[components[8][1]]} : ${[components[9][1]]} │ US West`,
@@ -76,11 +80,11 @@ class Ping extends Command {
         ].join('\n')
       }, {
         name: '— Maintenance & Incidents',
-        value: `\`\`\`${data.incidents ? 'ok' : data.incidents}\`\`\``
+        value: `\`\`\`${data.incidents ? 'Aucun' : data.incidents}\`\`\``
       });
     } catch (err) { console.log(err); }
 
-    message.channel.send({ embed });
+    message.reply({ embeds: [embed] });
   }
 }
 

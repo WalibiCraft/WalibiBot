@@ -1,20 +1,33 @@
 const Discord = require("discord.js");
 const moment = require("moment");
+const Command = require('../../structures/Command');
 
-module.exports = {
-  name: "user-info",
-  aliases: ["userinfo", "user_info", "user"],
-  category: "Info",
-  description: "Affiche les informations importantes de l'utilisateur mentionné",
-  usage: "w/user-info <@user>",
-  statut: "on",
-  run: async (client, message, args) => {
+class User extends Command {
+  constructor(...args) {
+    super({
+      description: "Affiche les informations importantes du compte de l'utilisateur mentionné.",
+      usage: ["user [@mention || username || tag || ID]"],
+      examples: ['w/user @Rakox', 'w/user Rakox', 'w/user Rakox#6769', 'w/user 490461455741747200'],
+      cooldown: 1000,
+      aliases: ["userinfo", "user_info", "user-info"],
+      guildOnly: true,
+      enabled: true,
+      args: [
+        {
+          key: 'user',
+          type: 'User'
+        }
+      ]
+    }, ...args);
+  }
+
+  async execute(message, args) {
 
 
     //Déclarations des const et des valeurs de l'embed
     moment.locale("FR");
-    const user = message.mentions.users.first() || message.author
-    const member = message.guild.member(user);
+    const user = args.user || message.author;
+    const member = message.guild.members.cache.get(user);
 
     /*
     var UserGame;
@@ -42,10 +55,10 @@ module.exports = {
     //Chargement de l'embed
     const Stats = new Discord.RichEmbed()
       .setTitle(":man_detective: USER-INFO")
-      .setThumbnail(user.displayAvatarURL)
-      .setAuthor(message.author.tag, message.author.displayAvatarURL)
+      .setImage(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.substring(0, 2) === 'a_' ? 'gif' : 'png'}?size=2048}`)
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
       .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL)
+      .setFooter("WalibiBot", message.guild.iconURL())
       .setColor("17ace8")
       .setDescription(user.tag)
       .addField("ID de l'utilisateur :", user.id)
@@ -60,6 +73,8 @@ module.exports = {
     //.addField("Position sur la liste des joins", position)
 
     //Envoi du message
-    message.channel.send(Stats);
+    message.reply({embeds : [Stats]});
   }
 }
+module.exports = User
+

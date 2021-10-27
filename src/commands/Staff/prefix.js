@@ -15,17 +15,17 @@ module.exports = {
                 "Vous devez mentionner un utilisateur ou un rôle ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
             )
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL)
-            .setAuthor(message.author.tag, message.author.displayAvatarURL);
+            .setFooter("WalibiBot", message.guild.iconURL())
+            .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
         const PermEmbed = new Discord.RichEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
             )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL)
+            .setFooter("WalibiBot", message.guild.iconURL())
 
         const WaitEmbed = new Discord.RichEmbed()
             .setTitle("🔧 PREFIX")
@@ -34,8 +34,8 @@ module.exports = {
                 "Action en cours, veuillez patienter, cela peut prendre plusieurs minutes."
             )
             .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL)
-            .setAuthor(message.author.tag, message.author.displayAvatarURL);
+            .setFooter("WalibiBot", message.guild.iconURL())
+            .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
         if (!message.member.hasPermission("ADMINISTRATOR"))
             return message.channel.send(PermEmbed);
@@ -71,8 +71,8 @@ module.exports = {
                         "]**"
                     )
                     .setTimestamp()
-                    .setFooter("WalibiBot", message.guild.iconURL)
-                    .setAuthor(message.author.tag, message.author.displayAvatarURL);
+                    .setFooter("WalibiBot", message.guild.iconURL())
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
                 m.edit(PrefixEmbed);
             }
@@ -99,8 +99,8 @@ module.exports = {
                             "**"
                         )
                         .setTimestamp()
-                        .setFooter("WalibiBot", message.guild.iconURL)
-                        .setAuthor(message.author.tag, message.author.displayAvatarURL);
+                        .setFooter("WalibiBot", message.guild.iconURL())
+                        .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
                     m.edit(PrefixEmbed);
                 }
