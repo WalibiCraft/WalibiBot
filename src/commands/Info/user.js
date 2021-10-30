@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const moment = require("moment");
 const Command = require('../../structures/Command');
-
 class User extends Command {
   constructor(...args) {
     super({
@@ -29,8 +28,8 @@ class User extends Command {
     const user = args.user || message.author;
     const member = message.guild.members.cache.get(user.id);
     const userType = user.bot ? "Bot" : "Utilisateur"
-    const userStatus = member.presence && member.presence.activities[0].state ? member.presence.activities[0].state : "Aucun jeu détecté";
-    const userGame =  member.presence && member.presence.activities[1].name ? member.presence.activities[1].name : "Aucun statut détecté";
+    const userStatus = member.presence.activities[0] && member.presence && member.presence.activities[0].state ? member.presence.activities[0].state : "Aucun jeu détecté";
+    const userGame =  member.presence.activities[1] && member.presence && member.presence.activities[1].name ? member.presence.activities[1].name : "Aucun statut détecté";
     const userOnline = member.presence && member.presence.status ? member.presence.status.toString().replace("dnd", "Ne pas déranger <:DND_Status:754411786236854282>").replace("online", "En ligne <:Online_Status:754411785821356033>").replace("idle", "Inactif <:Idle_Status:754411786308157583>").replace("offline", "Hors ligne <:Offline_Status:754411786316283974>"): "Hors ligne <:Offline_Status:754411786316283974>";
     const dateCreation = user ? moment(user.createdAt).format("LLLL").replace("lundi", "Lundi").replace("mardi", "Mardi").replace("mercredi", "Mercredi").replace("jeudi", "Jeudi").replace("vendredi", "Vendredi").replace("samedi", "Samedi").replace("dimanche", "Dimanche") : "Aucune date trouvée";
     const dateJoin = moment(member.joinedAt).format("LLLL").replace("lundi", "Lundi").replace("mardi", "Mardi").replace("mercredi", "Mercredi").replace("jeudi", "Jeudi").replace("vendredi", "Vendredi").replace("samedi", "Samedi").replace("dimanche", "Dimanche")
@@ -70,6 +69,7 @@ class User extends Command {
 
     //Envoi du message
     message.reply({embeds : [Stats]});
+    console.log(this.client)
   }
 }
 module.exports = User

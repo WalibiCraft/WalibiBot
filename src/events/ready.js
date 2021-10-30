@@ -43,7 +43,20 @@ class Ready extends Event {
         .catch(() => { });
     }
 
-    const { status, games, interval } = client.config.presence;
+    const { status, games, interval } = {
+      status: 'online', // https://discord.js.org/#/docs/main/stable/typedef/PresenceStatusData
+      games: [
+        {
+          name: 'w/help | WalibiCraft 🎡',
+          type: 'PLAYING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
+        },
+        {
+          name: client.guilds.cache.get("583756963586768897").memberCount + ' Membres 👀',
+          type: 'WATCHING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
+        }
+      ],
+      interval: 1000
+    };
 
     if (games instanceof Array && games.length > 0) {
       // Set default presence

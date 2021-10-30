@@ -1,6 +1,0 @@
-node_modules
-assets
-test-*.*
-config.*
-.eslint*.*
-package-lock.json
