@@ -21,15 +21,6 @@ class Skin extends Command {
     }, ...args);
   }
   async execute(message, args) {
-    const PseudoEmbed = new Discord.MessageEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous devez préciser un nom d'utilisateur Minecraft :x:\nPlus d'informations avec la commande `w/help <Commande>` :bulb:"
-      )
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL())
-      .setAuthor(message.author.tag, message.author.displayAvatarURL());
-
     const InvalidPseudoEmbed = new Discord.MessageEmbed()
       .setColor("RED")
       .setDescription(
@@ -41,7 +32,6 @@ class Skin extends Command {
       .setFooter("WalibiBot", message.guild.iconURL())
       .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
-    if (!args.pseudo) return message.reply({embeds: [PseudoEmbed]});
     const content = message.content.trim().split(/ +/g);
     const user = content.slice(1).join(" ");
 

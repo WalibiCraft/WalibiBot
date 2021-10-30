@@ -2,14 +2,33 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const moment = require("moment");
 
-module.exports = {
-    name: "prefix",
-    category: "staff",
-    description: "Change le prefix de l'utilisateur ou des personnes ayant le rôle mentionné [Staff Only]",
-    usage: "w/prefix <@user> <prefix> || w/prefix <@role> <prefix>",
-    statut: "on",
-    run: async (client, message, args) => {
-        const MentionEmbed = new Discord.RichEmbed()
+const Command = require('../../structures/Command');
+
+class Prefix extends Command {
+    constructor(...args) {
+        super({
+            description: "Change le prefix de l'utilisateur ou des personnes ayant le rôle mentionné [Staff Only]",
+            usage: ["w/prefix <@mention || username || tag || ID> <prefix> || w/prefix <@role> <prefix>"],
+            examples: ['w/prefix @Suicidaul 💞', 'w/prefix Suicidaul 💞', 'w/prefix The_Suicidaul#7969 💞', 'w/prefix 437342188439863296 💞'],
+            cooldown: 1000,
+            aliases: ["changeprefix", "préfix"],
+            guildOnly: true,
+            enabled: true,
+            userPermissions: [Discord.Permissions.FLAGS.MANAGE_NICKNAMES],
+            args: [
+                {
+                    key: 'modify',
+                    required: true,
+                },
+                {
+                    key: 'prefix',
+                    required: true
+                }
+            ]
+        }, ...args);
+    }
+    async execute(message, args) {
+        const MentionEmbed = new Discord.MessageEmbed()
             .setColor("RED")
             .setDescription(
                 "Vous devez mentionner un utilisateur ou un rôle ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
@@ -18,16 +37,7 @@ module.exports = {
             .setFooter("WalibiBot", message.guild.iconURL())
             .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
-        const PermEmbed = new Discord.RichEmbed()
-            .setColor("RED")
-            .setDescription(
-                "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
-            )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL())
-            .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL())
-
-        const WaitEmbed = new Discord.RichEmbed()
+        const WaitEmbed = new Discord.MessageEmbed()
             .setTitle("🔧 PREFIX")
             .setColor("NAVY")
             .setDescription(
@@ -37,35 +47,26 @@ module.exports = {
             .setFooter("WalibiBot", message.guild.iconURL())
             .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
-        if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(PermEmbed);
-
-        // role
-        const Args = message.content.split(" ");
-        const roleArgs = Args.slice(1, 2);
-        const prefixMsg = args[1];
-
-        const roleID = roleArgs[0].slice(3, -1);
-        const role = message.guild.roles.get(roleID);
+        const roleID = args.modify.slice(3, -1);
+        const role = message.guild.roles.cache.get(roleID);
+        const prefixMsg = args.prefix;
         if (!role) {
-            if (message.mentions.users.size == 0) {
-                return message.channel.send(MentionEmbed);
+            if (!message.guild.members.cache.find(member => member.id == args.modify.slice(3, -1))) {
+                return message.reply({ embeds: [MentionEmbed] });
             } else {
                 // pseudo
-                let joueur = message.guild.member(message.mentions.users.first()).user.username;
-                let membre = message.guild.member(message.mentions.users.first());
-                const m = await message.channel.send(WaitEmbed);
+                let joueur = message.mentions.members.first().user.username;
+                let membre = message.guild.members.cache.find(member => member.id == args.modify.slice(3, -1))
+                const m = await message.reply({ embeds: [WaitEmbed] });
 
-                message.guild
-                    .member(message.mentions.users.first())
-                    .setNickname("[" + prefixMsg + "] " + joueur);
+                membre.setNickname("[" + prefixMsg + "] " + joueur);
 
-                const PrefixEmbed = new Discord.RichEmbed()
+                const PrefixEmbed = new Discord.MessageEmbed()
                     .setTitle("🔧 PREFIX")
                     .setColor("NAVY")
                     .setDescription(
                         "Action effectuée avec succés ✅\nLe nouveau prefix de " +
-                        membre +
+                        membre.toString() +
                         " est maintenant **[" +
                         prefixMsg +
                         "]**"
@@ -74,26 +75,23 @@ module.exports = {
                     .setFooter("WalibiBot", message.guild.iconURL())
                     .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
-                m.edit(PrefixEmbed);
+                m.edit({ embeds: [PrefixEmbed] });
             }
         } else {
-            let roleMembers = message.guild.roles.get(roleID).members;
-            const m = await message.channel.send(WaitEmbed);
-            const prefixMsg = args[1];
+            let roleMembers = message.guild.roles.cache.get(roleID).members;
+            const m = await message.reply({ embeds: [WaitEmbed] });
             //message.channel.startTyping();
 
-            roleMembers.forEach(async user => {
-                if (user.roles.has(roleID)) {
-                    user.setNickname(
-                        `[${prefixMsg}] ${client.users.get(user.id).username}`
-                    );
+            roleMembers.forEach(async user1 => {
+                if (user1.roles.cache.has(roleID)) {
+                    user1.setNickname("[" + prefixMsg + "] " + user1.user.username);
 
-                    const PrefixEmbed = new Discord.RichEmbed()
+                    const PrefixEmbed = new Discord.MessageEmbed()
                         .setTitle("🔧 PREFIX")
                         .setColor("NAVY")
                         .setDescription(
                             "Action effectuée avec succés ✅ \nLe prefix de chaque membre ayant le rôle " +
-                            roleArgs +
+                            args.modify +
                             " a été modifié en **" +
                             prefixMsg +
                             "**"
@@ -102,9 +100,10 @@ module.exports = {
                         .setFooter("WalibiBot", message.guild.iconURL())
                         .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
-                    m.edit(PrefixEmbed);
+                    m.edit({embeds: [PrefixEmbed]});
                 }
             });
         }
     }
 };
+module.exports = Prefix

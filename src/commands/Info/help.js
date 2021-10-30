@@ -34,7 +34,6 @@ class Help extends Command {
 
       const examples = [this.client.config.prefix + cmd.name];
       cmd.examples.map((example) => examples.push(`${this.client.config.prefix + cmd.name} ${example}`));
-      console.log(cmd.usage)
 
       const embed = new Discord.MessageEmbed()
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -46,7 +45,7 @@ class Help extends Command {
         .addField("— Description", `\`\`\`${cmd.description}\`\`\``)
         .addField("— Usage", `\`\`\`${"- " + cmd.usage.join('\n- ')}\`\`\``)
         .addField("— Exemples", `\`\`\`${"- " + cmd.examples.join('\n- ')}\`\`\``)
-        .addField("— Alias", `\`\`\`- ${cmd.aliases.length > 0 ? this.client.config.prefix + cmd.aliases.join('\n- ' + this.client.config.prefix) : 'Aucun alias'}\`\`\``);
+        .addField("— Alias", `\`\`\`- ${cmd.aliases != "" ? this.client.config.prefix + cmd.aliases.join('\n- ' + this.client.config.prefix) : 'Aucun alias'}\`\`\``);
       return message.reply({ embeds: [embed] });
     }
 

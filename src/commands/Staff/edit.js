@@ -1,69 +1,50 @@
 const Discord = require("discord.js");
+const Command = require('../../structures/Command');
 
-module.exports = {
-    name: "edit",
-    aliases: ["édit"],
-    category: "Staff",
-    description:
-        "Modifie le message sous forme d'embed indiqué par le nouveau contenu (Ne fonctionne qu'avec les messages du bot) [Staff Only]",
-    usage: "w/edit <id du message> <nouvelle couleur> <nouveau titre> <nouvelle description>",
-    statut: "on",
-    run: async (client, message, args) => {
-        const PermEmbed = new Discord.RichEmbed()
+class Edit extends Command {
+    constructor(...args) {
+        super({
+            description: "Modifie le message sous forme d'embed indiqué par le nouveau contenu (Ne fonctionne qu'avec les messages du bot et dans le channel où le message se trouve) [Staff Only]",
+            usage: ["w/edit <id du message> <nouvelle couleur> <nouveau titre> <nouvelle description>"],
+            examples: ["w/edit 903707405584576572 BLUE Event! #「🚨」annonces Bonjour à tous, ceci est une annonce editée !"],
+            cooldown: 1000,
+            aliases: [""],
+            guildOnly: true,
+            enabled: true,
+            userPermissions: [Discord.Permissions.FLAGS.MANAGE_CHANNELS],
+            args: [{ key: 'message', required: true }, { key: 'couleur', required: true }, { key: 'titre', required: true }, { key: 'description', required: true },]
+        }, ...args);
+    }
+
+    async execute(message, args) {
+
+        const MessageEmbed = new Discord.MessageEmbed()
             .setColor("RED")
             .setDescription(
-                "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
-            )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL())
-            .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL());
-        if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(PermEmbed);
-
-        const Idembed = new Discord.RichEmbed()
-            .setColor("RED")
-            .setDescription(
-                "Vous devez entrer l'id du message que vous voulez éditer ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
-            )
-            .setAuthor(message.author.tag, message.author.displayAvatarURL())
-            .setTimestamp()
-            .setFooter("WalibiBot", message.guild.iconURL());
-        if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(PermEmbed);
-
-        const TextEmbed = new Discord.RichEmbed()
-            .setColor("RED")
-            .setDescription(
-                "Vous devez entrer le nouveau contenu du message que vous voulez éditer ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
+                "Le message que vous avez indiqué n'est pas valide ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
             )
             .setAuthor(message.author.tag, message.author.displayAvatarURL())
             .setTimestamp()
             .setFooter("WalibiBot", message.guild.iconURL());
 
-        if (!message.member.hasPermission("ADMINISTRATOR"))
-            return message.channel.send(PermEmbed);
-
+        let msgId = args.message;
+        if (!msgId) return message.reply({ embeds: [MessageEmbed] })
         let things = message.content.trim().split(/ +/g);
-        if (!args[0]) return message.channel.send(Idembed);
-        if (isNaN(args[0])) return message.channel.send(Idembed);
-        if (!args[1]) return message.channel.send(TextEmbed);
-        let msgId = args[0];
-
-        let embedchat = new Discord.RichEmbed()
+        const embedchat = new Discord.MessageEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL())
-            .setColor(args[1])
-            .setTitle(args[2])
-            .setDescription(`${things.slice(4).join(" ")}`)
+            .setColor(args.couleur.toString())
+            .setTitle(args.titre.toString())
+            .setDescription(`${things.slice(5).join(" ")}`)
             .setTimestamp()
             .setFooter("WalibiBot", message.guild.iconURL());
-        //message.delete();
 
 
-        message.channel.fetchMessages({ around: msgId, limit: 1 }).then(msg => {
+        message.channel.messages.fetch({ around: msgId, limit: 1 }).then(msg => {
             const fetchedMsg = msg.first();
-            fetchedMsg.edit(embedchat);
+            fetchedMsg.edit({ embeds: [embedchat] });
         });
+        message.delete()
 
-        //message.delete();
     }
 };
+module.exports = Edit

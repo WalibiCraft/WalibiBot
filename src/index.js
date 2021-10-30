@@ -20,7 +20,8 @@ class Bot extends Client {
     super(({ intents: myIntents }));
 
     this.config = config;
-    this.version = version;
+    this.version = version;;
+
 
     /* Initialise logger and spinner */
     this.logger = new Logger();

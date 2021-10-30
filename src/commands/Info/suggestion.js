@@ -10,22 +10,18 @@ class Suggestion extends Command {
       cooldown: 1000,
       aliases: ["suggest","idea"],
       guildOnly: true,
+      args: [
+        {
+          key: 'idea',
+          required: true
+        }
+      ]
     }, ...args);
   }
 
   async execute(message, client) {
     const things = message.content.trim().split(/ +/g);
     const suggest = things.slice(1).join(" ")
-
-    const SayEmbed = new Discord.MessageEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous devez indiquer une suggestion :x:\nPlus d'informations avec la commande `w/help <Commande>` :bulb:"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
-    if (!suggest) return message.reply({ embeds: [SayEmbed]})
 
     const SuggestionEmbed = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())

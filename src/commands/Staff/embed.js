@@ -1,48 +1,71 @@
 const Discord = require("discord.js");
+const Command = require('../../structures/Command');
 
-module.exports = {
-  name: "embed",
-  category: "staff",
-  description:
-    "Remplace votre message par un message en embed plus esthétique [Staff only]",
-  usage: "w/embed <couleur> <titre> <channel> <description>",
-  statut: "on",
-  run: async (client, message, args) => {
-    const PermEmbed = new Discord.RichEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
+class Embed extends Command {
+  constructor(...args) {
+    super({
+      description: "Remplace votre message par un message en embed plus esthétique [Staff only]",
+      usage: ["w/embed <couleur> <titre> <channel> <description>"],
+      examples: ["w/embed RED Annonce! #「🚨」annonces Bonjour à tous, ceci est une annonce spéciale !"],
+      cooldown: 1000,
+      aliases: [""],
+      guildOnly: true,
+      enabled: true,
+      userPermissions: [Discord.Permissions.FLAGS.MANAGE_CHANNELS],
+      args: [
+        {
+          key: 'couleur',
+          required: true
+        },
+        {
+          key: 'titre',
+          required: true
+        },
+        {
+          key: 'channel',
+          required: true
+        },
+        {
+          key: 'description',
+          required: true
+        },
+      ]
+    }, ...args);
+  }
 
-    const MessageEmbed = new Discord.RichEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous devez entre un message a transformer en embed ❌ \nPlus d'information avec la commande `w/info <Commande>` 💡"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
+  async execute(message, args) {
 
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(PermEmbed);
-    let color = "\"" + args[0] + "\"" 
-    let title = "\"" + args[0] + "\"" 
+    const ChannelEmbed = new Discord.MessageEmbed()
+    .setColor("RED")
+    .setDescription(
+      "Le channel que vous avez indiqué n'est pas valide ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
+    )
+    .setAuthor(message.author.tag, message.author.displayAvatarURL())
+    .setTimestamp()
+    .setFooter("WalibiBot", message.guild.iconURL());
+
+    let ch = message.guild.channels.cache.find(channel => channel.id === args.channel.replace("<#", "").replace(">", ""));
+    if (!ch) return message.reply({embeds: [ChannelEmbed]})
     let things = message.content.trim().split(/ +/g);
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(PermEmbed);
-    if (!args[0]) return message.channel.send(MessageEmbed);
-    let embedchat = new Discord.RichEmbed()
+    const embedchat = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setColor(args[0])
-      .setTitle(args[1])
-      .setDescription(`${things.slice(3).join(" ")}`)
+      .setColor(args.couleur.toString())
+      .setTitle(args.titre.toString())
+      .setDescription(`${things.slice(4).join(" ")}`)
       .setTimestamp()
       .setFooter("WalibiBot", message.guild.iconURL());
-    message.delete();
+    const doneEmbed = new Discord.MessageEmbed()
+      .setTitle(":package: EMBED")
+      .setColor("NAVY")
+      .setDescription(
+        "Action effectuée avec succés ✅\nL'embed a été envoyé avec succès dans le channel " + args.channel)
+      .setTimestamp()
+      .setFooter("WalibiBot", message.guild.iconURL())
+      .setAuthor(message.author.tag, message.author.displayAvatarURL());
+    message.reply({ embeds: [doneEmbed] })
 
-    message.channel.send(embedchat);
+   
+    ch.send({ embeds: [embedchat] })
   }
 };
+module.exports = Embed

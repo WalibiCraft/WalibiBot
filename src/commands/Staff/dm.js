@@ -1,63 +1,50 @@
 const Discord = require("discord.js");
+const Command = require('../../structures/Command');
 
-module.exports = {
-  name: "dm",
-  aliases: ["mp"],
-  category: "staff",
-  description:
-    "Envoie le message indiqué a l'utilisateur mentionné [Staff only]",
-  usage: "w/dm <@user> <message>",
-  statut: "on",
-  run: async (client, message, args) => {
-    const PermEmbed = new Discord.RichEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous n'avez pas l'autorisation de faire ça, bien tenté ! ❌"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
+class Dm extends Command {
+  constructor(...args) {
+    super({
+      description: "Envoie le message indiqué à l'utilisateur [Staff only]",
+      usage: ["w/dm <@mention || username || tag || ID> <message>"],
+      examples: ["w/dm Rakox Tu est le plus beau", "w/dm Méga Tu est le meilleur admin"],
+      cooldown: 1000,
+      aliases: ["mp", "privatemessage", "talk"],
+      guildOnly: true,
+      enabled: true,
+      userPermissions: [Discord.Permissions.FLAGS.MANAGE_CHANNELS],
+      args: [
+        {
+          key: 'user',
+          type: 'User'
+        },
+        {
+          key: 'string',
+          required: true
+        }
+      ]
+    }, ...args);
+  }
 
-    const SayEmbed = new Discord.RichEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous devez indiquer un message à envoyer ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
+  async execute(message, args) {
 
-    const MentionEmbed = new Discord.RichEmbed()
-      .setColor("RED")
-      .setDescription(
-        "Vous devez mentionner un utilisateur ❌ \nPlus d'informations avec la commande `w/info <Commande>` 💡"
-      )
-      .setAuthor(message.author.tag, message.author.displayAvatarURL())
-      .setTimestamp()
-      .setFooter("WalibiBot", message.guild.iconURL());
-
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-      return message.channel.send(PermEmbed);
-    let membre = message.guild.member(message.mentions.users.first());
-    if (!membre) return message.channel.send(MentionEmbed);
+    let membre = args.user
     let things = message.content.trim().split(/ +/g);
-    if (!args[1]) return message.channel.send(SayEmbed);
     const botmessage = things.slice(2).join(" ");
-    message.delete().catch();
     membre.send(botmessage);
-    const mpembed = new Discord.RichEmbed()
+    const mpembed = new Discord.MessageEmbed()
       .setTitle("✉️ DM")
       .setColor("NAVY")
       .setDescription(
         "Action effectuée avec succés ✅\n " +
-          membre +
-          ' a bien reçu le message "**' +
-          botmessage +
-          '**" en mp'
+        membre.toString() +
+        ' a bien reçu le message "**' +
+        botmessage +
+        '**" en mp'
       )
       .setTimestamp()
       .setFooter("WalibiBot", message.guild.iconURL())
       .setAuthor(message.author.tag, message.author.displayAvatarURL());
-    message.channel.send(mpembed);
+    message.reply({embeds: [mpembed]});
   }
 };
+module.exports = Dm
