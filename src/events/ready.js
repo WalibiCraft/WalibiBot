@@ -1,8 +1,11 @@
 const { existsSync, createWriteStream } = require('fs');
 const os = require('os');
+const figlet = require('figlet');
 const fetch = require('node-fetch');
 
 const Event = require('../structures/Event');
+const { chown } = require('fs/promises');
+const DiscordVoice = require('@discordjs/voice')
 
 class Ready extends Event {
   // eslint-disable-next-line no-useless-constructor
@@ -15,6 +18,17 @@ class Ready extends Event {
 
     client.logger.ipc(`${client.user.tag}, ready to serve ${client.users.cache.size} users in ${client.guilds.cache.size} servers.`);
     client.logger.ipc(`${client.user.tag} is online, hosted by ${os.hostname()}`);
+    //Console
+    figlet('WalibiBot', {
+      width: 100,
+    }, function (err, data) {
+      if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+      }
+      console.log(data)
+    });
 
     // Setting up the bot name
     client.user.setUsername(client.config.name)
@@ -78,7 +92,15 @@ class Ready extends Event {
         });
       }, ((typeof interval === 'number' && interval) || 30));
     }
+    //Connexion au channel
+    DiscordVoice.joinVoiceChannel({
+      channelId: "722842846146592909",
+      guildId: "583756963586768897",
+      adapterCreator: client.guilds.cache.get("583756963586768897").voiceAdapterCreator,
+    });
   }
 }
+
+
 
 module.exports = Ready;

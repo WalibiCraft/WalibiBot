@@ -4,4 +4,3 @@ const bot = new Bot();
 
 bot.commands.load();
 bot.events.load();
-console.log("oui.")

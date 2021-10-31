@@ -10,6 +10,26 @@ class Message extends Event {
   async execute(message) {
     const { client } = this;
 
+    if (message.channel.id === "722838096000974909") {
+      if (!message.author.bot) {
+        if (!message.member.permission.has("ADMINISTRATOR")) { }
+        if (!message.content.toLowerCase().includes("w/bvn")) {
+          message.delete();
+          const errorembed = new Discord.RichEmbed()
+            .setColor("RED")
+            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setDescription(
+              "Vous n'avez pas le droit de discuter dans ce channel :x: \nUtilisez uniquement `w/bvn` pour souhaiter la bienvenue :octagonal_sign:"
+            )
+            .setTimestamp()
+            .setFooter("WalibiBot", message.guild.iconURL);
+          message.channel.send(errorembed).then(msg => {
+            msg.delete(15000);
+          });
+        }
+      }
+    }
+
     const args = message.content.slice(client.config.prefix.length).trim().split(/\s+/g);
     const command = args.shift().toLowerCase();
     const cmd = client.commands.fetch(command);
@@ -19,13 +39,13 @@ class Message extends Event {
     if (!message.content.toLowerCase().startsWith(client.config.prefix)) return;
 
     const HelpEmbed = new Discord.MessageEmbed()
-    .setColor("RED")
-    .setDescription(
-      "Cette commande n'existe pas ! :x: \nEssayez plutôt `w/help` pour avoir la liste des commandes :bulb:"
-    )
-    .setAuthor(message.author.tag, message.author.displayAvatarURL())
-    .setTimestamp()
-    .setFooter("WalibiBot", message.guild.iconURL());
+      .setColor("RED")
+      .setDescription(
+        "Cette commande n'existe pas ! :x: \nEssayez plutôt `w/help` pour avoir la liste des commandes :bulb:"
+      )
+      .setAuthor(message.author.tag, message.author.displayAvatarURL())
+      .setTimestamp()
+      .setFooter("WalibiBot", message.guild.iconURL());
 
     if (!cmd || !cmd.enabled) {
       return message.reply({ embeds: [HelpEmbed] });
@@ -169,5 +189,6 @@ class Message extends Event {
     }
   }
 }
+
 
 module.exports = Message;

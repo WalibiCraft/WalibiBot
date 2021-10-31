@@ -1,6 +1,5 @@
 const Bot = require('./src');
 //const bot = new Bot();
-console.log(this.client)
 module.exports = {
     name: 'WalibiBot',
     avatar: 'https://cdn.discordapp.com/attachments/631488622436024335/764268322400763954/logo_discord_reonter_encore.png',
