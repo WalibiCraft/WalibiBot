@@ -13,7 +13,9 @@ class Test extends Command {
 
     async execute(message, args) {
         function Membres() {
-            return console.log(message.guild.memberCount + "membres ! :eyes:")
+            return message.guild.channels.cache
+                .get("722842725178933249")
+                .setName("「👥」Membres : 7" + message.guild.memberCount);
         }
         Membres()
     }

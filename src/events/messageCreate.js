@@ -15,7 +15,7 @@ class Message extends Event {
         if (!message.member.permission.has("ADMINISTRATOR")) { }
         if (!message.content.toLowerCase().includes("w/bvn")) {
           message.delete();
-          const errorembed = new Discord.RichEmbed()
+          const errorembed = new Discord.MessageEmbed()
             .setColor("RED")
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             .setDescription(
@@ -170,6 +170,7 @@ class Message extends Event {
               console.log(err)
             } else {
               this.client.logger.error(err);
+              this.client.guilds.cache.get("583756963586768897").channels.cache.get("903424661533118464").send(err)
             }
           }
         }
@@ -185,6 +186,7 @@ class Message extends Event {
         console.log(err)
       } else {
         this.client.logger.error(err);
+        this.client.guilds.cache.get("583756963586768897").channels.cache.get("903424661533118464").send(err)
       }
     }
   }

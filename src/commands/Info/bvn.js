@@ -29,7 +29,7 @@ class Bvn extends Command {
       message.delete();
     } else {
       //Message d'erreur
-      const errorembed = new MessageEmbed()
+      const errorembed = new Discord.MessageEmbed()
         .setColor("RED")
         .setAuthor(message.author.tag, message.author.displayAvatarURL())
         .setDescription(
@@ -38,7 +38,7 @@ class Bvn extends Command {
         .setTimestamp()
         .setFooter("WalibiBot", message.guild.iconURL());
 
-      message.reply({ embeds: [errorembed] })
+      message.reply(embeds [errorembed])
     }
   }
 };

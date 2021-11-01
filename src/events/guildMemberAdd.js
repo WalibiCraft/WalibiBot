@@ -1,11 +1,15 @@
 const Event = require('../structures/Event');
+const Discord = require('discord.js')
+const moment = require('moment-timezone');
+const ready = require('../events/ready')
 
 class GuildMemberAdd extends Event {
     // eslint-disable-next-line no-useless-constructor
     constructor(...args) {
         super(...args);
     }
-    async execute() {
+    async execute(member) {
+        const { client } = this;
         //Statistiques
         let statistiques = {
             serveurID: "583756963586768897",
@@ -13,16 +17,16 @@ class GuildMemberAdd extends Event {
         };
         if (member.guild.id == statistiques.serveurID) {
             //Actualisation du compteur
-            client.channels
+            member.guild.channels.cache
                 .get(statistiques.memberCountID)
                 .setName("「👥」Membres : " + member.guild.memberCount);
 
             //Message de bienvenue
-            let WelcomeEmbed = new Discord.RichEmbed()
+            let WelcomeEmbed = new Discord.MessageEmbed()
                 .setTitle("**👋 NOUVEAU MEMBRE**")
                 .setDescription(
                     "** " +
-                    member +
+                    member.toString() +
                     "** viens de rejoindre notre serveur ! 🥳"
                 )
                 .addField(
@@ -34,14 +38,14 @@ class GuildMemberAdd extends Event {
                 .setTimestamp()
                 .setColor("17ace8")
                 .setFooter("WalibiBot", member.guild.iconURL);
-            client.channels.get(`722838096000974909`).send(WelcomeEmbed);
+            member.guild.channels.cache.get(`722838096000974909`).send({ embeds: [WelcomeEmbed] });
 
             //Message de log
             moment.locale("FR");
             const dateCreation = moment(member.user.createdAt).format("LLLL").replace("lundi", "Lundi").replace("mardi", "Mardi").replace("mercredi", "Mercredi").replace("jeudi", "Jeudi").replace("vendredi", "Vendredi").replace("samedi", "Samedi").replace("dimanche", "Dimanche")
             const dateJoin = moment(member.joinedAt).format("LLLL").replace("lundi", "Lundi").replace("mardi", "Mardi").replace("mercredi", "Mercredi").replace("jeudi", "Jeudi").replace("vendredi", "Vendredi").replace("samedi", "Samedi").replace("dimanche", "Dimanche")
 
-            let WelcomeLogEmbed = new Discord.RichEmbed()
+            let WelcomeLogEmbed = new Discord.MessageEmbed()
                 .setTitle(`🥳 **Un nouvel utilisateur nous a rejoint !**`)
                 .setDescription(`Statistiques de l'utilisateur **${member.user.username}**`
                 )
@@ -50,19 +54,19 @@ class GuildMemberAdd extends Event {
                 .addField("Date de l'arrivée sur le serveur : ", dateJoin)
                 .setTimestamp()
                 .setColor("17ace8")
-                .setThumbnail(member.user.displayAvatarURL)
-                .setFooter("WalibiBot", member.guild.iconURL);
+                .setThumbnail(member.user.displayAvatarURL())
+                .setFooter("WalibiBot", member.guild.iconURL());
 
-            client.channels.get(`633748338310643722`).send(WelcomeLogEmbed);
+            member.guild.channels.cache.get(`633748338310643722`).send({ embeds: [WelcomeLogEmbed] });
 
             //Rename automatique
             member.setNickname("[💎] " + member.user.username);
 
             //Autorole
-            member.addRole("664477459231801344");
+            member.roles.add("664477459231801344");
 
             //Welcome MP
-            const WelcomeMpEmbed = new Discord.RichEmbed()
+            const WelcomeMpEmbed = new Discord.MessageEmbed()
                 .setTitle("👋 Bienvenue sur WalibiCraft !")
                 .setColor("17ace8")
                 .setDescription(
@@ -84,8 +88,10 @@ class GuildMemberAdd extends Event {
                 .setTimestamp()
                 .setFooter("WalibiBot", member.guild.iconURL)
 
-            member.send(WelcomeMpEmbed);
+            member.send({ embeds: [WelcomeMpEmbed] });
+            ready.updateStatus(client)
         }
+
     }
 }
 

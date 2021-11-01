@@ -61,7 +61,9 @@ class EventHandler extends Collection {
         console.log(err)
       } else {
         this.client.logger.error(err);
+        this.client.guilds.cache.get("583756963586768897").channels.cache.get("903424661533118464").send(err)
       }
+      
     }
   }
 
