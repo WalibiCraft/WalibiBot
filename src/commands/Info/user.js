@@ -5,7 +5,7 @@ class User extends Command {
   constructor(...args) {
     super({
       description: "Affiche les informations importantes du compte de l'utilisateur mentionné.",
-      usage: ["user [@mention || username || tag || ID]"],
+      usage: ["w/user [@mention || username || tag || ID]"],
       examples: ['w/user @Rakox', 'w/user Rakox', 'w/user Rakox#6769', 'w/user 490461455741747200'],
       cooldown: 1000,
       aliases: ["userinfo", "user_info", "user-info"],
@@ -69,7 +69,6 @@ class User extends Command {
 
     //Envoi du message
     message.reply({embeds : [Stats]});
-    console.log(this.client)
   }
 }
 module.exports = User

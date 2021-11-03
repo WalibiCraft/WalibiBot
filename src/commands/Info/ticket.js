@@ -7,7 +7,7 @@ class Ticket extends Command {
     constructor(...args) {
         super({
             description: "Vous permet d'ouvrir un ticket (channel privé avec tout le staff) afin que nous puissions vous apporter l'aide nécéssaire",
-            usage: "w/ticket <new> <reason> || w/ticket close",
+            usage: ["w/ticket <new> <reason>",  "w/ticket close"],
             examples: ["w/ticket new Report d'un joueur", "w/ticket new J'ai trouvé un bug", "w/ticket new Question sur le serveur"],
             cooldown: 1000,
             guildOnly: true,
@@ -179,7 +179,6 @@ class Ticket extends Command {
                 await message.guild.channels.create(`「📨」ticket-${message.author.id}`, { type: 'text' }).then(c => {
                     //Déplacement dans la catégorie
                     const category = message.guild.channels.cache.get("587223080972320788")
-                    //console.log(c, category)
                     if (category && c) c.setParent(category.id);
 
                     //Permissions

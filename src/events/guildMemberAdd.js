@@ -1,7 +1,6 @@
 const Event = require('../structures/Event');
 const Discord = require('discord.js')
 const moment = require('moment-timezone');
-const ready = require('../events/ready')
 
 class GuildMemberAdd extends Event {
     // eslint-disable-next-line no-useless-constructor
@@ -89,7 +88,6 @@ class GuildMemberAdd extends Event {
                 .setFooter("WalibiBot", member.guild.iconURL)
 
             member.send({ embeds: [WelcomeMpEmbed] });
-            ready.updateStatus(client)
         }
 
     }

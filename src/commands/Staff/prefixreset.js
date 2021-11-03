@@ -8,7 +8,7 @@ class PrefixReset extends Command {
     constructor(...args) {
         super({
             description: "Retire le prefix de l'utilisateur ou des personnes ayant le rôle mentionné [Staff Only]",
-            usage: ["w/prefixreset <@mention || username || tag || ID> || w/prefix <@role>"],
+            usage: ['w/prefixreset <@mention || username || tag || ID>',  'w/prefix <@role>'],
             examples: ['w/prefixreset @Suicidaul', 'w/prefix Suicidaul', 'w/prefix The_Suicidaul#7969', 'w/prefix 437342188439863296'],
             cooldown: 1000,
             aliases: ["pr", "removeprefix", "deleteprefix"],

@@ -5,7 +5,7 @@ class Suggestion extends Command {
   constructor(...args) {
     super({
       description: "Poste votre idée mise en forme dans le channel「🔥」suggestions afin que votre propositions soit examinée par tout le serveur",
-      usage: "w/suggest <proposition>",
+      usage: ["w/suggest <proposition>"],
       examples: ["w/suggest Mettre en place un nouveau grade", "w/suggest Améliorer l'attraction n°1"],
       cooldown: 1000,
       aliases: ["suggest","idea"],
@@ -34,13 +34,12 @@ class Suggestion extends Command {
       .setFooter("WalibiBot", message.guild.iconURL());
 
     message.guild.channels.cache
-      .get("722841863429816481")
+      .get("722840520090714163")
       .send({embeds: [SuggestionEmbed]})
       .then(function (msg) {
         msg.react("❌");
         msg.react("✅");
       });
-    message.delete();
   }
 };
 module.exports = Suggestion;

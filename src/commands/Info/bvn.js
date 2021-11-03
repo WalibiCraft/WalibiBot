@@ -1,7 +1,10 @@
 const Discord = require('discord.js');
 const Command = require('../../structures/Command');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 class Bvn extends Command {
+
   constructor(...args) {
     super({
       description: "Affiche un message de bienvenue aux nouveaux arrivants (:warning: Attention ne fonctionne que dans le channel「👋」bienvenue)",
@@ -38,7 +41,7 @@ class Bvn extends Command {
         .setTimestamp()
         .setFooter("WalibiBot", message.guild.iconURL());
 
-      message.reply(embeds [errorembed])
+      message.reply({embeds: [errorembed]})
     }
   }
 };

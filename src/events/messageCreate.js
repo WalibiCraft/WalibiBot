@@ -37,6 +37,7 @@ class Message extends Event {
     if (message.author.bot || message.system) return;
     if (!message.member && message.guild) message.member = await message.guild.members.fetch(message.author);
     if (!message.content.toLowerCase().startsWith(client.config.prefix)) return;
+    if (message.content.toLowerCase().startsWith("w/yes") || message.content.toLowerCase().startsWith("w/no")) return;
 
     const HelpEmbed = new Discord.MessageEmbed()
       .setColor("RED")

@@ -7,44 +7,6 @@ const Event = require('../structures/Event');
 const { chown } = require('fs/promises');
 const DiscordVoice = require('@discordjs/voice')
 
-const update = function updateStatus(cl) {
-  const { status, games, interval } = {
-    status: 'online', // https://discord.js.org/#/docs/main/stable/typedef/PresenceStatusData
-    games: [
-      {
-        name: 'w/help | WalibiCraft 🎡',
-        type: 'PLAYING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
-      },
-      {
-        name: cl.guilds.cache.get("583756963586768897").memberCount + ' Membres 👀',
-        type: 'WATCHING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
-      }
-    ],
-    interval: 1000
-  };
-
-  // Set default presence
-  if (games instanceof Array && games.length > 0) {
-    cl.user.setPresence({
-      status,
-      activity: {
-        name: games[0].name,
-        type: games[0].type,
-        url: games[0].url || 'https://www.twitch.tv/'
-      }
-    });
-
-    setInterval(() => {
-      // Redefined the bot's activity
-      const index = Math.floor(Math.random() * (games.length));
-      cl.user.setActivity(games[index].name, {
-        type: games[index].type,
-        url: games[index].url || 'https://www.twitch.tv/'
-      });
-    }, ((typeof interval === 'number' && interval) || 30));
-  }
-}
-
 class Ready extends Event {
   // eslint-disable-next-line no-useless-constructor
   constructor(...args) {
@@ -61,8 +23,7 @@ class Ready extends Event {
       width: 100,
     }, function (err, data) {
       if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
+        console.log(err);
         return;
       }
       console.log(data)
@@ -94,7 +55,41 @@ class Ready extends Event {
       client.user.setAvatar(avatar)
         .catch(() => { });
     }
-    updateStatus(client)
+      const { status, games, interval } = {
+          status: 'online', // https://discord.js.org/#/docs/main/stable/typedef/PresenceStatusData
+          games: [
+              {
+                  name: 'w/help | + de 15 commandes ! 🤖',
+                  type: 'LISTENING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
+              },
+              {
+                  name: 'WalibiCraft 🎡 | Reproduction de Walibi Rhône-Alpes dans Minecraft',
+                  type: 'PLAYING' // https://discord.js.org/#/docs/main/stable/typedef/ActivityType
+              }
+          ],
+          interval: 5000
+      };
+          // Set default presence
+      if (games instanceof Array && games.length > 0) {
+          client.user.setPresence({
+              status,
+              activity: {
+                  name: games[0].name,
+                  type: games[0].type,
+                  url: games[0].url || 'https://www.twitch.tv/'
+              }
+          });
+  
+          setInterval(() => {
+              // Redefined the bot's activity
+              const index = Math.floor(Math.random() * (games.length));
+              client.user.setActivity(games[index].name, {
+                  type: games[index].type,
+                  url: games[index].url || 'https://www.twitch.tv/'
+              });
+          }, ((typeof interval === 'number' && interval) || 30));
+  }
+  
 
     //Connexion au channel
     DiscordVoice.joinVoiceChannel({
@@ -107,4 +102,4 @@ class Ready extends Event {
 
 
 
-module.exports = { Ready };
+module.exports = Ready;

@@ -56,6 +56,7 @@ class Help extends Command {
         categories.push(command.category);
       }
     });
+    console.log(categories)
 
     const embed = new Discord.MessageEmbed()
       .setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -67,11 +68,10 @@ class Help extends Command {
       .setFooter("WalibiBot", message.guild.iconURL());
 
     categories.sort().forEach((group) => {
-      const commands = [...this.client.commands.values()].filter(({ category }) => category === group);;
-
+      const commands = [...this.client.commands.values()].filter(({ category }) => category === group);
       embed.fields.push(
         {
-          name: `${categories} (${commands.length})`,
+          name: `${group} (${commands.length})`,
           value: `\`\`\`\u200B${commands.map(({ name }) => name).join(', ')}\`\`\``
         }
       );

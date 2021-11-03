@@ -8,7 +8,7 @@ class Prefix extends Command {
     constructor(...args) {
         super({
             description: "Change le prefix de l'utilisateur ou des personnes ayant le rôle mentionné [Staff Only]",
-            usage: ["w/prefix <@mention || username || tag || ID> <prefix> || w/prefix <@role> <prefix>"],
+            usage: ['w/prefix <@mention || username || tag || ID> <prefix>',  'w/prefix <@role> <prefix>'],
             examples: ['w/prefix @Suicidaul 💞', 'w/prefix Suicidaul 💞', 'w/prefix The_Suicidaul#7969 💞', 'w/prefix 437342188439863296 💞'],
             cooldown: 1000,
             aliases: ["changeprefix", "préfix"],

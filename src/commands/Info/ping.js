@@ -22,7 +22,7 @@ class Ping extends Command {
   constructor(...args) {
     super({
       description: 'Affiche des informations sur le statut du bot Discord ainsi que de l\'API Discord',
-      usage: 'ping',
+      usage: ['ping'],
       cooldown: 5000,
       aliases: ['pong', 'status']
     }, ...args);

@@ -1,7 +1,6 @@
 const Event = require('../structures/Event');
 const moment = require('moment-timezone');
 const Discord = require('discord.js')
-const ready = require('../events/ready')
 
 class GuildMemberRemove extends Event {
     // eslint-disable-next-line no-useless-constructor
@@ -41,7 +40,6 @@ class GuildMemberRemove extends Event {
 
             member.guild.channels.cache.get(`633748338310643722`).send({ embeds: [WelcomeLogEmbed] })
         }
-        ready.updateStatus(client)
     }
 }
 
