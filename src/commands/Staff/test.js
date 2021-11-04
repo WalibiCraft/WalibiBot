@@ -27,8 +27,8 @@ class Test extends Command {
                     .setCustomId('ticket')
                     .setLabel("Ouvrir un ticket")
                     .setStyle('PRIMARY'),
-                    new Discord.MessageButton()
-                    .setCustomId('ticketh')
+                new Discord.MessageButton()
+                    .setCustomId('tickethelp')
                     .setLabel("Comment les tickets fonctionnent-ils ?")
                     .setStyle('SECONDARY'))
 
@@ -47,7 +47,11 @@ class Test extends Command {
                     .setLabel("@〖 Médias 〗")
                     .setStyle('PRIMARY'),
                 new Discord.MessageButton()
-                    .setCustomId('tickethelp')
+                    .setCustomId('partner')
+                    .setLabel("@〖 Publicité 〗")
+                    .setStyle('PRIMARY'),
+                new Discord.MessageButton()
+                    .setCustomId('help')
                     .setLabel("À quoi correspondent ces rôles ?")
                     .setStyle('SECONDARY'))
 
@@ -79,7 +83,7 @@ class Test extends Command {
             .setAuthor(message.author.tag, message.author.displayAvatarURL());
 
 
-        //message.guild.channels.cache.get(`722838824782397531`).send({ embeds: [RulesEmbed], components: [buttonRule] })
+        message.guild.channels.cache.get(`722838824782397531`).send({ embeds: [RulesEmbed], components: [buttonRule] })
         message.guild.channels.cache.get(`616994843603763213`).send({ embeds: [TicketEmbed], components: [buttonTicket] })
         message.guild.channels.cache.get(`905246418489442355`).send({ embeds: [RolesEmbed], components: [buttonRole] })
 
