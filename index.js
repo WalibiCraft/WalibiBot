@@ -8,7 +8,7 @@ const { Client, Collection } = require("discord.js");
 const client = new Discord.Client();
 
 //Login
-client.login('NjA0NjczMTc4Mjc4NTU5NzQ5.XTxXxw.UBlkdnh6mLmQhDi-_pUHDDSj9kY').catch(console.error());
+client.login(TOKEN).catch(console.error());
 
 //Init handlers
 client.commands = new Collection();
