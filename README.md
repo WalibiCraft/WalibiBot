@@ -1,2 +1,2 @@
-# WalibiBot-V11
-Code du bot WalibiBot, version discord.js V11
+# WalibiBot Discord 🎢
+Code du bot Discord WalibiBot, réalisé pour le serveur WalibiCraft.
